@@ -21,8 +21,10 @@ app.config.suppress_callback_exceptions = True
 
 # Load data from csv
 def load_data():
-    # To do: Completar la función 
-    
+    data = pd.read_csv("datos_energia.csv")
+    data["time"] = pd.to_datetime(data["time"])
+    data = data.set_index("time")
+    return data    
 
 # Cargar datos
 data = load_data()
@@ -227,6 +229,8 @@ app.layout = html.Div(
 def update_output_div(date, hour, proy):
 
     if ((date is not None) & (hour is not None) & (proy is not None)):
+        if hour ==24:
+            hour = 0
         hour = str(hour)
         minute = str(0)
 
